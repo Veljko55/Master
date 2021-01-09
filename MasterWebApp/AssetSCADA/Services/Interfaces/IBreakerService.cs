@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ServiceModel;
 
 namespace AssetSCADA.Services.Interfaces
 {
+    [ServiceContract]
     public interface IBreakerService
     {
+        [OperationContract]
          void SetValue(bool value, string modelCode);
-         bool GetValue(string modelCode);
-         bool ModelCodeExist(string modelCode);
-         void Create(string modelCode);
-         void Delete(string modelCode);
-         void InsertMany(List<string> modelCodes);
-         void RefreshSimulator();
+        [OperationContract]
+        bool GetValue(string modelCode);
+        [OperationContract]
+        bool ModelCodeExist(string modelCode);
+        [OperationContract]
+        void Create(string modelCode);
+        [OperationContract]
+        void Delete(string modelCode);
+        [OperationContract]
+        void InsertMany(List<string> modelCodes);
+        [OperationContract]
+        void RefreshSimulator();
     }
 }
