@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCADA.ScadaDB;
 
 namespace SCADA.Migrations
 {
     [DbContext(typeof(ScadaContext))]
-    partial class ScadaContextModelSnapshot : ModelSnapshot
+    [Migration("20210109172327_BreakerIsDeleted")]
+    partial class BreakerIsDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace SCADA.Migrations
 
                     b.Property<string>("ModelCode")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SimulatorAddress")
-                        .HasColumnType("int");
 
                     b.Property<bool>("Value")
                         .HasColumnType("bit");

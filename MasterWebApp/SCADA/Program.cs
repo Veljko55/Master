@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using SCADA.Services.Implementations;
 
 namespace SCADA
 {
@@ -8,7 +9,9 @@ namespace SCADA
     {
         static void Main(string[] args)
         {
-            StartSimulator();
+            StartSimulator(); 
+            BreakerService service = new BreakerService();
+            service.RefreshSimulator();
             Console.ReadKey();
         }
 
