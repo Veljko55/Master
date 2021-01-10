@@ -1,5 +1,6 @@
 ﻿using AssetSCADA.Services.Implementations;
-using AssetSCADA.Services.Interfaces;
+using Common;
+using Common.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,20 +14,22 @@ namespace AssetSCADA
 {
     class Program
     {
+        static ServiceHost host = new ServiceHost(typeof(BreakerService));
 
         static void Main(string[] args)
         {
             StartSimulator();
             BreakerService service = new BreakerService();
             service.RefreshSimulator();
-            service.Create("test1") ;
+            StartScadaService();
+            
 
-            Uri baseAddress = new Uri("localhost:8080/scada");
-
-            ServiceHost host = new ServiceHost(typeof(BreakerService));
-            NetTcpBinding binding = new NetTcpBinding();
-            host.AddServiceEndpoint(typeof(IBreakerService), binding, new Uri("net.tcp://localhost:5000/scada"));
-            host.Open();
+            //client side of wcf
+            EndpointAddress addr = new EndpointAddress(WCFEndpoints.ScadaEndpoint);
+            NetTcpBinding clientBinding = new NetTcpBinding();
+            ChannelFactory<IBreakerService> channelFactory = new ChannelFactory<IBreakerService>(clientBinding, addr);
+            IBreakerService proxy = channelFactory.CreateChannel();
+            proxy.Create("modelcode1");
 
             Console.ReadKey();
             host.Close();
@@ -38,5 +41,22 @@ namespace AssetSCADA
             var scadaFolderPath = Directory.GetParent(workingDirectory).Parent.FullName;
             Process.Start($"{scadaFolderPath}/EasyModbus/EasyModbusServerSimulator.exe");
         }
+
+        static void StartScadaService() 
+        {
+
+            try 
+            {
+                NetTcpBinding binding = new NetTcpBinding();
+                host.AddServiceEndpoint(typeof(IBreakerService), binding, new Uri(WCFEndpoints.ScadaEndpoint));
+                host.Open();
+            }
+            catch(Exception e) 
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel;
 
-namespace AssetSCADA.Services.Interfaces
+namespace Common.Services.Interfaces
 {
     [ServiceContract]
     public interface IBreakerService
     {
         [OperationContract]
-         void SetValue(bool value, string modelCode);
+        void SetValue(bool value, string modelCode);
         [OperationContract]
         bool GetValue(string modelCode);
         [OperationContract]

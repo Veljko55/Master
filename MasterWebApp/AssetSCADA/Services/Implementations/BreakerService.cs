@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using AssetSCADA.Entities;
 using EasyModbus;
-using AssetSCADA.Services.Interfaces;
+using Common.Services.Interfaces;
 
 namespace AssetSCADA.Services.Implementations
 {
